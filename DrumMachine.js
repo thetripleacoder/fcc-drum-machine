@@ -1,150 +1,115 @@
-'use strict';
-
-const e = React.createElement;
-const audioClips = [
+const drumPadDataArr = [
   {
-    id: 'Q',
-    text: 'Heater 1',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+    btnId: 'Heater 1',
+    btnTxt: 'Q',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
   },
   {
-    id: 'W',
-    text: 'Heater 2',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
+    btnId: 'Heater 2',
+    btnTxt: 'W',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
   },
   {
-    id: 'E',
-    text: 'Heater 3',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
+    btnId: 'Heater 3',
+    btnTxt: 'E',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
   },
   {
-    id: 'A',
-    text: 'Heater 4',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
+    btnId: 'Heater 4',
+    btnTxt: 'A',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
   },
   {
-    id: 'S',
-    text: 'Clap',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
+    btnId: 'Clap',
+    btnTxt: 'S',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
   },
   {
-    id: 'D',
-    text: 'Open-HH',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
+    btnId: 'Open-HH',
+    btnTxt: 'D',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
   },
   {
-    id: 'Z',
-    text: "Kick-n'-Hat",
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
+    btnId: "Kick-n'-Hat",
+    btnTxt: 'Z',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
   },
   {
-    id: 'X',
-    text: 'Kick',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
+    btnId: 'Kick',
+    btnTxt: 'X',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
   },
   {
-    id: 'C',
-    text: 'Closed-HH',
-    src: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
+    btnId: 'Closed-HH',
+    btnTxt: 'C',
+    audioSrc: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
   },
 ];
+
+const DrumPad = (props) => {
+  return (
+    <button
+      className='drum-pad'
+      id={props.btnId}
+      onClick={props.handleClick}
+      onKeyPress={props.handleKeyPress}
+    >
+      {props.btnTxt}
+      <audio src={props.audioSrc} className='clip' id={props.btnTxt}></audio>
+    </button>
+  );
+};
 
 class DrumMachine extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { liked: false };
+  }
+
+  // Change code below this line
+  componentDidMount() {
+    document.addEventListener('keyup', this.handleKeyPress);
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.handleKeyPress);
+  }
+
+  handleClick(data) {
+    let audioEl = document.getElementById(data.btnTxt);
+    audioEl.play();
+    let displayEl = document.querySelector('#display');
+    displayEl.innerHTML = data.btnId;
+  }
+
+  handleKeyPress(event) {
+    console.log(event.key);
+    let audioEl = document.getElementById(event.key.toUpperCase());
+    audioEl.play();
+    let displayEl = document.querySelector('#display');
+    let audioTitle = drumPadDataArr.find(
+      (data) => data.btnTxt === event.key.toUpperCase()
+    ).btnId;
+    displayEl.innerHTML = audioTitle;
   }
 
   render() {
-    let element = (
+    return (
       <div>
-        <div id='display'></div>
-        <div class='container'>
-          <div class='row'>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3'
-                class='clip'
-                id='Q'
-              ></audio>
-              Q
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='hhttps://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3'
-                class='clip'
-                id='W'
-              ></audio>
-              W
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3'
-                class='clip'
-                id='E'
-              ></audio>
-              E
-            </button>
-          </div>
-          <div class='row'>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3'
-                class='clip'
-                id='A'
-              ></audio>
-              A
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3'
-                class='clip'
-                id='S'
-              ></audio>
-              S
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3'
-                class='clip'
-                id='D'
-              ></audio>
-              D
-            </button>
-          </div>
-          <div class='row'>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3'
-                class='clip'
-                id='Z'
-              ></audio>
-              Z
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3'
-                class='clip'
-                id='X'
-              ></audio>
-              X
-            </button>
-            <button class='drum-pad'>
-              <audio
-                src='https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3'
-                class='clip'
-                id='C'
-              ></audio>
-              C
-            </button>
-          </div>
-        </div>
+        <p id='display'>Audio Clip Title Here</p>
+        {drumPadDataArr.map((data) => {
+          return (
+            <DrumPad
+              key={data.btnTxt}
+              btnId={data.btnId}
+              btnTxt={data.btnTxt}
+              audioSrc={data.audioSrc}
+              handleClick={() => this.handleClick(data)}
+            ></DrumPad>
+          );
+        })}
       </div>
     );
-    return element;
   }
 }
 
-const domContainer = document.querySelector('#drum-machine');
-const root = ReactDOM.createRoot(domContainer);
-root.render(e(DrumMachine));
+// Change code below this line
+ReactDOM.render(<DrumMachine />, document.getElementById('drum-machine'));
