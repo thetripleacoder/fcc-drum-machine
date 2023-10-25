@@ -10,10 +10,17 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <style>
+      .btn-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 10px;
+      }
+    </style>
   </head>
   <body>
     <!-- We will put our React component inside this div. -->
-    <div id="drum-machine"></div>
+    <div id="drum-machine" class="vh-100"></div>
 
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->

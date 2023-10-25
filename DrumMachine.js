@@ -49,7 +49,8 @@ const drumPadDataArr = [
 const DrumPad = (props) => {
   return (
     <button
-      className='drum-pad'
+      type='button'
+      className='btn btn-secondary drum-pad col'
       id={props.btnId}
       onClick={props.handleClick}
       onKeyPress={props.handleKeyPress}
@@ -63,6 +64,11 @@ const DrumPad = (props) => {
 class DrumMachine extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      bgColor: '',
+    };
+    this.handleClick = this.handleClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   // Change code below this line
@@ -78,34 +84,46 @@ class DrumMachine extends React.Component {
     audioEl.play();
     let displayEl = document.querySelector('#display');
     displayEl.innerHTML = data.btnId;
+
+    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    this.setState({ bgColor: `#${randomColor}` });
   }
 
   handleKeyPress(event) {
-    console.log(event.key);
     let audioEl = document.getElementById(event.key.toUpperCase());
     audioEl.play();
     let displayEl = document.querySelector('#display');
-    let audioTitle = drumPadDataArr.find(
+    let audioData = drumPadDataArr.find(
       (data) => data.btnTxt === event.key.toUpperCase()
-    ).btnId;
-    displayEl.innerHTML = audioTitle;
+    );
+    displayEl.innerHTML = audioData.btnId;
+
+    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    this.setState({ bgColor: `#${randomColor}` });
   }
 
   render() {
     return (
-      <div>
-        <p id='display'>Audio Clip Title Here</p>
-        {drumPadDataArr.map((data) => {
-          return (
-            <DrumPad
-              key={data.btnTxt}
-              btnId={data.btnId}
-              btnTxt={data.btnTxt}
-              audioSrc={data.audioSrc}
-              handleClick={() => this.handleClick(data)}
-            ></DrumPad>
-          );
-        })}
+      <div
+        className='d-flex flex-column text-center justify-content-center vh-100 p-5'
+        style={{ backgroundColor: this.state.bgColor }}
+      >
+        <div id='display' className='card mb-4 py-2'>
+          Click or Press any letter below
+        </div>
+        <div className='btn-container flex-grow-1'>
+          {drumPadDataArr.map((data, index) => {
+            return (
+              <DrumPad
+                key={index}
+                btnId={data.btnId}
+                btnTxt={data.btnTxt}
+                audioSrc={data.audioSrc}
+                handleClick={() => this.handleClick(data)}
+              ></DrumPad>
+            );
+          })}
+        </div>
       </div>
     );
   }
