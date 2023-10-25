@@ -50,7 +50,7 @@ const DrumPad = (props) => {
   return (
     <button
       type='button'
-      className='btn btn-secondary drum-pad col'
+      className='btn btn-secondary drum-pad col fs-1'
       id={props.btnId}
       onClick={props.handleClick}
       onKeyPress={props.handleKeyPress}
