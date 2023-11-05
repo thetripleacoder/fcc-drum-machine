@@ -105,24 +105,26 @@ class DrumMachine extends React.Component {
   render() {
     return (
       <div
-        className='d-flex flex-column text-center justify-content-center vh-100 p-5'
+        className='d-flex flex-column text-center justify-content-center align-items-center vh-100 p-5'
         style={{ backgroundColor: this.state.bgColor }}
       >
-        <div id='display' className='card mb-4 py-2'>
-          Click or Press any letter below
-        </div>
-        <div className='btn-container flex-grow-1'>
-          {drumPadDataArr.map((data, index) => {
-            return (
-              <DrumPad
-                key={index}
-                btnId={data.btnId}
-                btnTxt={data.btnTxt}
-                audioSrc={data.audioSrc}
-                handleClick={() => this.handleClick(data)}
-              ></DrumPad>
-            );
-          })}
+        <div className='w-75 h-50'>
+          <div id='display' className='card mb-4 py-2'>
+            Click or Press any letter below
+          </div>
+          <div className='btn-container flex-grow-1'>
+            {drumPadDataArr.map((data, index) => {
+              return (
+                <DrumPad
+                  key={index}
+                  btnId={data.btnId}
+                  btnTxt={data.btnTxt}
+                  audioSrc={data.audioSrc}
+                  handleClick={() => this.handleClick(data)}
+                ></DrumPad>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
